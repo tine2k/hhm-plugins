@@ -38,18 +38,31 @@ function createReview(scores) {
     data.possPlayer = stats.getPossessionPerPlayer();
     data.passes = stats.getPassesPerPlayer();
 
-    let xhttp = new XMLHttpRequest();
-    let url = room.getConfig().url;
-    xhttp.open('POST', url, true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            console.log(xhttp.response);
-        }
-    };
+    const config = room.getConfig();
+    postData(config.url, data, config.username, config.password);
+}
 
-    data = JSON.stringify(data);
-    xhttp.send(data);
+async function postData(url, data, username, password) {
+    const encodedAuth = Buffer.from(username + ':' + password).toString('base64');
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Basic ' + encodedAuth,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const body = await response.text();
+            room.log(`Bad response from API: ${response.status} - ${response.statusText} - ${body}`, HHM.log.level.ERROR);
+        } else {
+            return response;
+        }
+    } catch (error) {
+        room.log(error.message, HHM.log.level.ERROR);
+    }
 }
 
 room.onTeamVictory = (scores) => {
