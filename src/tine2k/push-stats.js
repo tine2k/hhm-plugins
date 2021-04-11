@@ -22,7 +22,7 @@ let timestart;
 
 function createReview(scores) {
     let data = {};
-    data.rec = room.stopRecording(); // replays
+    data.rec = bufferToBase64(room.stopRecording()); // replays
     data.players = room.getPlayerList()
         .filter(p => p.conn !== 'HOST_CONN')
         .map(p => { return {
@@ -40,6 +40,11 @@ function createReview(scores) {
 
     const config = room.getConfig();
     postData(config.url, data, config.encodedAuth);
+}
+
+function bufferToBase64(buf) {
+    const binstr = Array.prototype.map.call(buf, ch => String.fromCharCode(ch)).join('');
+    return btoa(binstr);
 }
 
 async function postData(url, data, encodedAuth) {
