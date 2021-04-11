@@ -39,21 +39,20 @@ function createReview(scores) {
     data.passes = stats.getPassesPerPlayer();
 
     const config = room.getConfig();
-    postData(config.url, data, config.encodedAuth);
+    postData(config.url, data, config.username, config.password);
 }
 
 function bufferToBase64(buf) {
-    const binstr = Array.prototype.map.call(buf, ch => String.fromCharCode(ch)).join('');
-    return btoa(binstr);
+    return btoa(String.fromCharCode.apply(null, buf));
 }
 
-async function postData(url, data, encodedAuth) {
+async function postData(url, data, username, password) {
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Basic ' + encodedAuth,
+                Authorization: 'Basic ' + btoa(username + ':' + password),
             },
             body: JSON.stringify(data),
         });
@@ -70,6 +69,7 @@ async function postData(url, data, encodedAuth) {
 }
 
 function logError(text) {
+    console.error(text);
     room.sendAnnouncement(text, null, 16711680, 'bold');
 }
 

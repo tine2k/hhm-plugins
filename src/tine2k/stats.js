@@ -244,7 +244,7 @@ room.getPossessionPerPlayer = () => {
     let players = Object.keys(possPerc);
     return players.map(player => {
         return {
-            player: room.getPlayer(player).name,
+            player: getPlayerName(player),
             poss: possPerc[player]
         };
     });
@@ -254,13 +254,18 @@ room.getPassesPerPlayer = () => {
     const passesPerPlayer = [];
     for (let player in passes) {
         passesPerPlayer.push({
-            player: room.getPlayer(player).name,
+            player: getPlayerName(player),
             success: passes[player].succ,
             overall: passes[player].overall
         });
     }
     return passesPerPlayer;
 };
+
+function getPlayerName(player) {
+    console.error('no player found for', player);
+    return room.getPlayer(player) ? room.getPlayer(player).name : 'unknown';
+}
 
 /**
  * takes a map of names and counters and returns map of names and percentage.
