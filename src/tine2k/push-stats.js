@@ -55,13 +55,17 @@ async function postData(url, data, encodedAuth) {
 
         if (!response.ok) {
             const body = await response.text();
-            room.log(`Bad response from API: ${response.status} - ${response.statusText} - ${body}`, HHM.log.level.ERROR);
+            logError(`Error posting game stats, bad response from API: ${response.status} - ${response.statusText} - ${body}`);
         } else {
             return response;
         }
     } catch (error) {
-        room.log(error.message, HHM.log.level.ERROR);
+        logError(`Error posting game stats: ${error.message}`);
     }
+}
+
+function logError(text) {
+    room.sendAnnouncement(text, null, 16711680, 'bold');
 }
 
 room.onTeamVictory = (scores) => {
