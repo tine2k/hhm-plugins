@@ -39,11 +39,10 @@ function createReview(scores) {
     data.passes = stats.getPassesPerPlayer();
 
     const config = room.getConfig();
-    postData(config.url, data, config.username, config.password);
+    postData(config.url, data, config.encodedAuth);
 }
 
-async function postData(url, data, username, password) {
-    const encodedAuth = Buffer.from(username + ':' + password).toString('base64');
+async function postData(url, data, encodedAuth) {
     try {
         const response = await fetch(url, {
             method: 'POST',
