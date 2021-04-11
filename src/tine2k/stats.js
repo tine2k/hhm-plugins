@@ -36,7 +36,7 @@ let gameRunning = false;
 let goalScored = false;
 let lastTouch = {
     scorer: null,
-    assister: null,
+    assist: null,
 };
 let goals = [];
 
@@ -44,7 +44,7 @@ room.onGameStart = () => {
     pass = null;
     lastTouch = {
         scorer: null,
-        assister: null,
+        assist: null,
     };
     goals = [];
     passes = {};
@@ -127,7 +127,7 @@ function hasPossession(player) {
 function updateLastTouch(player) {
     if (lastTouch.scorer !== null) {
         if (player.id !== lastTouch.scorer.id) {
-            lastTouch.assister = lastTouch.scorer;
+            lastTouch.assist = lastTouch.scorer;
             lastTouch.scorer = player;
         }
     } else {
@@ -202,7 +202,7 @@ function createGoal(teamId) {
     goal.team = teamId;
     goal.ownGoal = lastTouch.scorer.team !== teamId;
     goal.scorer = lastTouch.scorer.name;
-    goal.assister = (lastTouch.assister && lastTouch.assister.team === lastTouch.scorer.team) ? lastTouch.assister.name : null;
+    goal.assist = (lastTouch.assist && lastTouch.assist.team === lastTouch.scorer.team) ? lastTouch.assist.name : null;
     goal.timestamp = scores.time;
     return goal;
 }
@@ -215,8 +215,8 @@ function formatGoal(goal) {
         output = output + '⚽️ Goal by ' + goal.scorer;
     }
 
-    if (goal.assister) {
-        output = output + ', 💪 Assist by ' + goal.assister;
+    if (goal.assist) {
+        output = output + ', 💪 Assist by ' + goal.assist;
     }
     return output;
 }
@@ -225,7 +225,7 @@ room.onPositionsReset = () => {
     goalScored = false;
     lastTouch = {
         scorer: null,
-        assister: null,
+        assist: null,
     };
 };
 
