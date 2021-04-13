@@ -24,7 +24,7 @@ function createReview(scores) {
     let data = {};
     data.rec = bufferToBase64(room.stopRecording()); // replays
     data.players = room.getPlayerList()
-        .filter(p => p.conn !== 'HOST_CONN')
+        .filter(p => p.team)
         .map(p => { return {
             name: p.name,
             team: p.team
