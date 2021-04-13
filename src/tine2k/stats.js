@@ -263,8 +263,6 @@ room.getPassesPerPlayer = () => {
 };
 
 function getPlayerName(player) {
-    console.error('no player found for', player);
-    console.error('players', room.getPlayerList());
     return room.getPlayer(player) ? room.getPlayer(player).name : 'unknown';
 }
 
