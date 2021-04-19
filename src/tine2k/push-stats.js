@@ -39,7 +39,9 @@ function createReview(scores) {
     data.passes = stats.getPassesPerPlayer();
 
     const config = room.getConfig();
-    postData(config.url, data, config.username, config.password);
+    const response = postData(config.url, data, config.username, config.password);
+
+    room.sendAnnouncement('Game summary: ' + response);
 }
 
 function bufferToBase64(buf) {
