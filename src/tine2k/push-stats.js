@@ -39,9 +39,8 @@ function createReview(scores) {
     data.passes = stats.getPassesPerPlayer();
 
     const config = room.getConfig();
-    const response = postData(config.url, data, config.username, config.password);
-
-    room.sendAnnouncement('Game summary: ' + response);
+    postData(config.url, data, config.username, config.password)
+        .then(body => room.sendAnnouncement('Game summary: ' + body));
 }
 
 function bufferToBase64(buf) {
@@ -60,10 +59,9 @@ async function postData(url, data, username, password) {
         });
 
         if (!response.ok) {
-            const body = await response.text();
-            logError(`Error posting game stats, bad response from API: ${response.status} - ${response.statusText} - ${body}`);
+            logError(`Error posting game stats, bad response from API: ${response.status} - ${response.statusText}`);
         } else {
-            return response;
+            return await response.text();
         }
     } catch (error) {
         logError(`Error posting game stats: ${error.message}`);
