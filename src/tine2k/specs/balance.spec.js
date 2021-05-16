@@ -2,7 +2,7 @@ const roomSpy = jasmine.createSpyObj(['getConfig', 'onCommand_balance', 'sendAnn
 global.HBInit = () => {
     return roomSpy;
 };
-require('./balance');
+require('../balance');
 
 describe('plugin', () => {
     beforeEach(() => {
