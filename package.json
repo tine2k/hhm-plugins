@@ -1,0 +1,26 @@
+{
+  "name": "hhm-plugins",
+  "version": "1.0.0",
+  "description": "Haxball Plugins",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tine2k/hhm-plugins.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tine2k/hhm-plugins/issues"
+  },
+  "homepage": "https://github.com/tine2k/hhm-plugins#readme",
+  "devDependencies": {
+    "jasmine": "^3.7.0"
+  },
+  "dependencies": {
+    "haxball-types": "^1.0.2",
+    "haxroomie-core": "^2.5.0"
+  }
+}
