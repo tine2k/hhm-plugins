@@ -41,8 +41,6 @@ let lastTouch = {
 let goals = [];
 
 room.onGameStart = () => {
-    console.log('game started.');
-
     pass = null;
     lastTouch = {
         scorer: null,
