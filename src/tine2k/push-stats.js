@@ -89,7 +89,6 @@ room.onGameStop = () => {
 };
 
 room.onStadiumChange = (stad) => {
-    room.sendAnnouncement('set stadium to ' + stad);
     stadium = stad;
 };
 
