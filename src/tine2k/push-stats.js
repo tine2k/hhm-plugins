@@ -19,6 +19,7 @@ room.pluginSpec = {
 
 let stats;
 let timestart;
+let stadium;
 
 function createReview(scores) {
     let data = {};
@@ -31,6 +32,7 @@ function createReview(scores) {
         }
     });
     data.start = timestart;
+    data.stadium = stadium;
     data.scores = scores;
     data.goals = stats.getGoals();
     data.possTeam = stats.getPossessionPerTeam();
@@ -86,6 +88,12 @@ room.onGameStop = () => {
     room.stopRecording();
 };
 
+room.onStadiumChange = (stad) => {
+    console.log('set stadium to ' + stad);
+    stadium = stad;
+};
+
 room.onRoomLink = () => {
     stats = room.getPlugin('tine2k/stats');
+    room.setDefaultStadium('Big');
 };
